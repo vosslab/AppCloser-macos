@@ -9,7 +9,6 @@ DerivedData/
 .swiftpm/configuration/registries.json
 .swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
 .netrc
-## User settings
 ## Obj-C/Swift specific
 *.hmap
 ## App packaging
