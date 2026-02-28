@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-02-27
+
+### Fixes and Maintenance
+- Handle AppleScript error -600 ("Application isn't running") gracefully instead of printing raw error dict
+- Pre-check if app is still running before sending quit AppleScript to skip apps that already quit
+- Both changes fix a harmless race condition where an app quits between loading the list and sending the quit command
+
 ## 2026-02-26
 
 ### Additions and New Features

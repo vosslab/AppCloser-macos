@@ -213,8 +213,16 @@ struct AppCloserView: View {
 				currentIndex = index + 1
 				closingStatus = "Closing app \(currentIndex) of \(totalToClose): \(app)"
 			}
-			let quitScript = "tell application \"\(app)\" to quit"
-			_ = runAppleScript(quitScript)
+			// Check if the app is still running before sending quit
+			let stillRunning = NSWorkspace.shared.runningApplications.contains {
+				$0.localizedName == app
+			}
+			if stillRunning {
+				let quitScript = "tell application \"\(app)\" to quit"
+				_ = runAppleScript(quitScript)
+			} else {
+				print("[AppCloser] Skipping \(app): already quit")
+			}
 			usleep(100000) // 0.1 seconds for visibility
 		}
 	}
@@ -227,8 +235,14 @@ struct AppCloserView: View {
 		if let appleScript = NSAppleScript(source: script) {
 			let output = appleScript.executeAndReturnError(&error)
 			if let error = error {
-				if let code = error[NSAppleScript.errorNumber] as? Int, code == -128 {
-					print("[AppleScript] User canceled quit for: \(script)")
+				if let code = error[NSAppleScript.errorNumber] as? Int {
+					if code == -128 {
+						print("[AppleScript] User canceled quit for: \(script)")
+					} else if code == -600 {
+						print("[AppleScript] App already quit: \(script)")
+					} else {
+						print("[AppleScript] Error (code \(code)): \(error)")
+					}
 				} else {
 					print("[AppleScript] Error: \(error)")
 				}
