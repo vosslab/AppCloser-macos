@@ -1,3 +1,9 @@
 
 .DS_Store
 report_*.txt
+
+# === UNIVERSAL ===
+output*/
+_temp*.?*
+OTHER_REPOS/
+

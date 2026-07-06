@@ -2,3 +2,5 @@
 @docs/REPO_STYLE.md
 @docs/PYTHON_STYLE.md
 @docs/MARKDOWN_STYLE.md
+@docs/E2E_TESTS.md
+@docs/CLAUDE_HOOK_USAGE_GUIDE.md
